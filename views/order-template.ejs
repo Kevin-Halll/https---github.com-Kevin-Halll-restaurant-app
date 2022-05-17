@@ -1,0 +1,101 @@
+<section>
+  <h1 class="text-7xl text-center font-bold text-orange-500 py-5">
+    <%= title %>
+  </h1>
+
+  <div class="grid grid-cols-2 p-5 gap-4 w-[45%] m-auto">
+    <div class="shadow-md rounded-md relative">
+      <div>
+        <img
+          class="w-full h-52 object-cover"
+          src="<%= order.img_link %> "
+          alt=""
+        />
+      </div>
+
+      <div class="px-4 pb-5">
+        <h2 class="text-xl py-1"><%= order.type %></h2>
+        <p><%= order.description %></p>
+        <b class="text-3xl text-right block">$<%= order.price %> </b>
+      </div>
+
+      <div class=" mt-5 absolute left-0 block">
+        <a href="/menu" class="bg-orange-500 text-white p-4 block">
+            Back to Menu
+        </a>
+        </div>
+    </div>
+    <!-- RECEIPT -->
+    <!-- <form action="/order/add/order" method="POST" class="relative"> -->
+    <form action="/order/add-order" method="POST" class="relative">
+        <div class="reciept border p-5 shadow-md">
+            <div class="text-center">
+                <h1 class="text-2xl">Kev's Pizza</h1>
+                <small>6 Somewhere Drive <br> Kingston 10 <br> 876-555-6677</small>
+            </div>
+            <h2 class="bg-black text-white p-5 text-center mt-1">ORDER# </h2>
+    
+            <div>
+                <div class="p-5 flex justify-between">
+                    <p>
+                        <%= order.type %>
+                        <input type="text" name="menu_id" id="" value="<%= order.id %>" class="hidden"> 
+                    </p>
+                    
+                    <div>
+                        <input type="number" name="order_qty" id="order_qty" min="1" value="1" class="border w-[50px]">
+                    </div>
+                </div>
+                
+                <div class="px-5 flex justify-between">
+                    <p>Total</p>
+                    <div>
+                        <span>$</span>
+                        <!-- <p id="order_cost" class="w-[60px]"></p> -->
+                        <input type="number" id="order_cost" value="<%= order.price %>" class="w-[50px]" readonly>
+                    </div>
+                </div>
+
+                <div class="px-5 flex justify-between pt-1">
+                    <b>Grand Total</b>
+                    <div>
+                        <span>$</span>
+                        <input type="number" name="grand_total" id="grand_total" value="<%= order.price %>" class="w-[50px]" readonly>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <hr>
+            <div class="text-center">
+                <div class="flex justify-center">
+                    <p>Oreder Key Code:</p>
+                    <input type="text" name="key_code" id="order_key" class="w-[100px] font-semibold ml-1" readonly>
+                </div>
+                <small>use your order number along with key code to check status of your order</small>
+            </div>
+        </div>
+
+        <div class=" mt-4 absolute right-0">
+            <button type="submit" class="bg-orange-500 text-white p-4">
+                Confirm Order
+            </button>
+        </div>
+    </form>
+
+  </div>
+</section>
+
+<script>
+    let orderQty = document.querySelector('#order_qty')
+    let orderTotal = document.querySelector('#order_cost')
+    let grandTotal = document.querySelector('#grand_total')
+    let orderKey = document.querySelector('#order_key')
+
+    orderQty.onchange = () => {
+        let totalCost = orderQty.value * orderTotal.value;
+        grandTotal.value = totalCost
+    }
+
+    orderKey.value = Math.floor(Math.random() * 99) + 'K' + new Date().toJSON().slice(0, 10).split('-').reverse().join('')
+
+</script>
