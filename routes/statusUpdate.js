@@ -4,8 +4,6 @@ const db = require('../db')
 
 router.post("/", (req, res) => {
     let edit = [req.body.order_status, req.body.order_id];
-
-    console.log("Working PAfesddd");
     db.query(
       `UPDATE order_tbl SET order_status = ? WHERE id = ?`, edit,
       (err, results) => {
