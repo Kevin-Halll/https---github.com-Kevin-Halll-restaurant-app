@@ -24,6 +24,8 @@ const menu = require('./routes/menu')
 const order = require('./routes/order')
 const reciept = require('./routes/reciept')
 const status = require('./routes/order-status')
+const admin = require('./routes/admin')
+const statusUpdate = require('./routes/statusUpdate')
 
 
 app.get('/home', (req, res) => {
@@ -39,5 +41,8 @@ app.use('/reciept', order)
 // app.use('/all-orders', reciept)
 app.use('/status-check', status)
 app.use('/status/check', status)
+app.use('/admin', admin)
+app.use('/status/change', statusUpdate)
+app.use('/delete-order', statusUpdate)
 
 

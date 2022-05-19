@@ -1,0 +1,61 @@
+<section class="heading mt-10 px-5 w-[80%] m-auto">
+
+    <br />
+    <div class="flex justify-center text-center">
+      <table class="border p-3">
+        <thead>
+          <th class="px-5 py-3 border">Order Number</th>
+          <th class="px-5 py-3 border">Pizza Type</th>
+          <th class="px-5 py-3 border">Quantity</th>
+          <th class="px-5 py-3 border">Cost</th>
+          <th class="px-5 py-3 border">Order Status</th>
+          <th class="px-5 py-3 border">Actions</th>
+        </thead>
+  
+        <tbody>
+        <% orders.forEach(function(order) { %>
+          <tr class="hover:shadow-md hover:shadow-orange-400">
+            <td class="px-5 py-3 border"><%= order.order_id %></td>
+            <td class="px-5 py-3 border"><%= order.type %></td>
+            <td class="px-5 py-3 border"><%= order.order_qty %></td>
+            <td class="px-5 py-3 border">
+              <%= order.grand_total %>
+            </td>
+            <td class="px-5 py-3 border">
+                <div class="flex items-center gap-4">
+                        <form name="form_<%= order.order_id %>" action="/status/change" method="post">
+                          <div>
+                            <input type="number" name="order_id" id="" value="<%= order.order_id %>" hidden>
+                            <select name="order_status" id="" onchange="this.form.submit()" >
+                              <option value="0">Queued</option>
+                              <option value="1" <% if(order.order_status == 1) { %> selected <% } %>  >Processing</option>
+                            </select>
+                          </div>
+                        </form>
+                </div>
+            </td>
+            <td class="px-5 py-3 border flex justify-evenly gap-5 text-xl">
+              <div class="hover:text-orange-500" title="Delete Order">
+                <a href="/delete-order/<%= order.order_id %> ">
+                  <i class="fa-solid fa-trash"></i>
+                </a>
+              </div>
+            </td>
+          </tr>
+        <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  
+  <script>
+    let select = document.querySelectorAll('select')
+
+    select.forEach(sel => {
+      if(sel.value == 0) {
+        sel.classList.add('border-l-[5px]','border-orange-600', 'bg-orange-100')
+      }else{
+        sel.classList.add('border-l-[5px]', 'border-green-600', 'bg-green-100')
+      }
+    })
+  </script>
